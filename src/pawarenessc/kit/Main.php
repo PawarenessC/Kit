@@ -23,6 +23,9 @@ use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
+use metowa1227\MoneySystemAPI\MoneySystemAPI;
+use MixCoinSystem\MixCoinSystem;
+
 class Main extends pluginBase implements Listener
 {
     public function onEnable()
