@@ -1,6 +1,6 @@
 name: Kit
 main: pawarenessc\kit\Main
-version: 7.5.0
+version: 7.5.1
 api: [3.0.0,4.0.0]
 load: POSTWORLD
 authors: [PawarenessC,Picasso]
