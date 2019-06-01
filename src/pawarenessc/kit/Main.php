@@ -32,7 +32,7 @@ class Main extends pluginBase implements Listener
     {
         $this->getLogger()->info("=========================");
         $this->getLogger()->info("Kitを読み込みました");
-        $this->getLogger()->info("v7.0.1");
+        $this->getLogger()->info("v7.5.1");
         $this->getLogger()->info("=========================");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->system = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
