@@ -23,7 +23,7 @@ use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
 
-use metowa1227\MoneySystemAPI\MoneySystemAPI;
+use metowa1227\moneysystem\api\core\API;
 use MixCoinSystem\MixCoinSystem;
 
 class Main extends pluginBase implements Listener
@@ -32,7 +32,7 @@ class Main extends pluginBase implements Listener
     {
         $this->getLogger()->info("=========================");
         $this->getLogger()->info("Kitを読み込みました");
-        $this->getLogger()->info("v7.0.0");
+        $this->getLogger()->info("v7.0.1");
         $this->getLogger()->info("=========================");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->system = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
@@ -135,7 +135,7 @@ class Main extends pluginBase implements Listener
 					if($shop == "§l§cKIT§4SHOP"){
 						if ( $this->kit->exists($kit) ) {
 						$data = $this->kit->getAll()[$kit];
-						$money = $this->getMoney($name);
+						$money = $this->getMoney($player);
 						$level = $this->plugin->getLevel($name);
 						
 						if($level >= $data["レベル"]){
@@ -178,7 +178,7 @@ class Main extends pluginBase implements Listener
 		$this->names->set($name ,$kit);
 		$this->names->save();
 		
-		$this->cutMoney($name, $data["お金"]);
+		$this->cutMoney($player, $data["お金"]);
 								
 		foreach($data["アイテム"] as $item){
 		$item = explode(":",$item);
@@ -212,13 +212,14 @@ class Main extends pluginBase implements Listener
 	}
 	
 	
-	public function getMoney($name)
+	public function getMoney($player)
 	{
  	
- 		$plugin = $this->config->get("plugin");
+ 		$name = $player->getName();
+		$plugin = $this->config->get("plugin");
  	
  		if($plugin == "MoneySystem"){
- 		return MoneySystemAPI::getInstance()->CheckByName($name);
+ 		return API::getInstance()->get($player);
  	
  		}elseif($plugin == "EconomyAPI"){
 		return $this->system->mymoney($name);
@@ -228,12 +229,13 @@ class Main extends pluginBase implements Listener
  		}	
  	}
  	
- 	public function cutMoney($name ,$money)
+ 	public function cutMoney($player ,$money)
  	{	
- 		$plugin = $this->config->get("plugin");
+ 		$name = $player->getName();
+		$plugin = $this->config->get("plugin");
 
 		if($plugin == "MoneySystem"){
- 		MoneySystemAPI::getInstance()->TakeMoneyByName($name, $amount);
+ 		API::getInstance()->reduce($player, $money);
  	
  		}elseif($plugin == "EconomyAPI"){
 		$this->system->reduceMoney($name, $money);
