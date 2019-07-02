@@ -127,8 +127,11 @@ class Main extends pluginBase implements Listener
 					$shop = $sign->getLine(0);
 					$kit = $sign->getLine(1);
 					if($player->isSneaking()){
-					
+						if($shop == "§l§cKIT§4SHOP"){
+							if ( $this->kit->exists($kit) ) {
 					$this->sendKitUI($player, $kit);
+							}
+						}
 					
 					}else{
 					
